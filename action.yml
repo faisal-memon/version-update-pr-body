@@ -1,0 +1,64 @@
+name: version-update-pr-body
+description: Render a version-update pull request body from a Gomplate template.
+author: Faisal Memon
+branding:
+  icon: file-text
+  color: blue
+inputs:
+  output-file:
+    description: Path to write the rendered version update pull request body.
+    required: true
+  go-changed:
+    description: Whether the Go version changed.
+    required: false
+    default: 'false'
+  go-previous-version:
+    description: Previous Go version.
+    required: false
+    default: ''
+  go-current-version:
+    description: Current Go version.
+    required: false
+    default: ''
+  lint-changed:
+    description: Whether the lint toolchain changed.
+    required: false
+    default: 'false'
+  lint-previous-action-version:
+    description: Previous golangci-lint-action version.
+    required: false
+    default: ''
+  lint-current-action-version:
+    description: Current golangci-lint-action version.
+    required: false
+    default: ''
+  lint-previous-version:
+    description: Previous golangci-lint version.
+    required: false
+    default: ''
+  lint-current-version:
+    description: Current golangci-lint version.
+    required: false
+    default: ''
+  lint-fix-ran:
+    description: Whether make lint-fix ran for this update.
+    required: false
+    default: 'true'
+runs:
+  using: composite
+  steps:
+    - name: Render pull request body
+      uses: ammarlakis/action-gomplate@v1
+      with:
+        input_file: ${{ github.action_path }}/pr_body.md.tmpl
+        output_file: ${{ inputs.output-file }}
+      env:
+        GO_CHANGED: ${{ inputs.go-changed }}
+        GO_PREVIOUS_VERSION: ${{ inputs.go-previous-version }}
+        GO_CURRENT_VERSION: ${{ inputs.go-current-version }}
+        LINT_CHANGED: ${{ inputs.lint-changed }}
+        LINT_PREVIOUS_ACTION_VERSION: ${{ inputs.lint-previous-action-version }}
+        LINT_CURRENT_ACTION_VERSION: ${{ inputs.lint-current-action-version }}
+        LINT_PREVIOUS_VERSION: ${{ inputs.lint-previous-version }}
+        LINT_CURRENT_VERSION: ${{ inputs.lint-current-version }}
+        LINT_FIX_RAN: ${{ inputs.lint-fix-ran }}

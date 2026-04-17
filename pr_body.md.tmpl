@@ -1,0 +1,15 @@
+Updates repository version updates.
+
+Changes included in this PR:
+{{- if eq (env.Getenv "GO_CHANGED") "true" }}
+- Go version: `{{ env.Getenv "GO_PREVIOUS_VERSION" }}` -> `{{ env.Getenv "GO_CURRENT_VERSION" }}`
+{{- end }}
+{{- if and (ne (env.Getenv "LINT_PREVIOUS_ACTION_VERSION") "") (ne (env.Getenv "LINT_CURRENT_ACTION_VERSION") "") }}
+- golangci-lint-action: `{{ env.Getenv "LINT_PREVIOUS_ACTION_VERSION" }}` -> `{{ env.Getenv "LINT_CURRENT_ACTION_VERSION" }}`
+{{- end }}
+{{- if and (ne (env.Getenv "LINT_PREVIOUS_VERSION") "") (ne (env.Getenv "LINT_CURRENT_VERSION") "") }}
+- golangci-lint version: `{{ env.Getenv "LINT_PREVIOUS_VERSION" }}` -> `{{ env.Getenv "LINT_CURRENT_VERSION" }}`
+{{- end }}
+{{- if eq (env.Getenv "LINT_FIX_RAN") "true" }}
+- Ran `make lint-fix` after version updates
+{{- end }}
