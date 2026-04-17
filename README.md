@@ -21,7 +21,7 @@ It uses [Gomplate](https://gomplate.ca/) internally through the Marketplace acti
 
 ```yaml
 - name: Render version update PR body
-  uses: faisal-memon/render-gomplate-template-action@v1
+  uses: faisal-memon/version-update-pr-body@v1
   with:
     output-file: ${{ runner.temp }}/pr_body.md
     go-changed: ${{ steps.update-go.outputs.changed }}
